@@ -1,0 +1,12 @@
+flask==2.2.2
+numpy==1.22.4
+argparse
+#sounddevice
+soundfile
+#AssemblyAI
+requests==2.28.1
+# Google Speech
+google-cloud-speech
+#DeepSpeech
+av==8.0.2
+deepspeech==0.9.3

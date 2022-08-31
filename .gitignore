@@ -1,0 +1,5 @@
+*.pyc
+venv/*
+*.wav
+app/upload_files/*
+app/model/*
