@@ -23,10 +23,11 @@ app = Flask(__name__)
 UPLOAD_FOLDER = './upload_files'
 #app.secret_key = "g00dby3m1tr0l"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 
 
 stt = stt.DeepSpeech()
-stt.init_model(model_path='model/model.pbmm', scorer='model/kenlm_es.scorer', beam_width=None, lm_beta=None, lm_alpha=None)
+stt.init_model(model_path='model/output_graph.pb', scorer='model/similitud.scorer', beam_width=None, lm_beta=None, lm_alpha=None)
+#stt.init_model(model_path='model/model.pbmm', scorer='model/kenlm_es.scorer', beam_width=None, lm_beta=None, lm_alpha=None)
 
 #https://realpython.com/playing-and-recording-sound-python/
 @app.route('/version/', methods=['GET'])
@@ -41,7 +42,7 @@ def allowed_file(filename):
 def health_check():
     return 'OK'
 
-@app.route('/v1/deep-speech', methods=['POST'])
+@app.route('/v1/similitud', methods=['POST'])
 def upload_deepspeech():
     try:
         if 'file' not in request.files:
@@ -74,10 +75,10 @@ def upload_deepspeech():
         response = stt.Recognize(full_name)
 
         print(u"Transcript: {}".format(response))
-        with open(transcript, 'w') as f:
-            f.write(str(response) + '\n')
-
-        resp = jsonify({'message': 'file uploaded!', 'transcript': str(response)})
+        #with open(transcript, 'w') as f:
+        #    f.write(str(response) + '\n')
+        os.remove(full_name)
+        resp = jsonify({'file': filename, 'transcript': str(response)})
         resp.status_code = 200
         return resp
     except Exception as e:

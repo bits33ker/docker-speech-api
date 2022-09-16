@@ -31,12 +31,12 @@ class DeepSpeech:
                 if len(audio.streams.audio) > 1:
                     logging.warning("Audio has more than one stream. Only one of them will be used.")
 
-                resampler = av.audio.resampler.AudioResampler(
-                    format="s16", layout="mono", rate=16000
-                )
+                #resampler = av.audio.resampler.AudioResampler(
+                #    format="s16", layout="mono", rate=16000
+                #)
                 resampled_frames = []
                 for frame in audio.decode(audio=0):
-                    resample = resampler.resample(frame)
+                    resample = frame #resampler.resample(frame)
                     #for r in resample: 
                     resampled_frames.append(resample.to_ndarray().flatten())
                     #resampled_frames.append(np.array(resample).flatten())
